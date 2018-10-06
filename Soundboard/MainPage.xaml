@@ -25,5 +25,10 @@
                Margin="10" FontSize="{ThemeResource Header1FontSize}"
                    Foreground="{ThemeResource ForegroundThemeBrush}"
                Text="Soundboard" HorizontalAlignment="Left" VerticalAlignment="Center" />
+
+        <ItemsControl Grid.Row="1" ItemsSource="">
+            
+        </ItemsControl>
+       
     </Grid>
 </Page>
