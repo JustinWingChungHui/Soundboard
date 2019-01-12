@@ -37,7 +37,9 @@ namespace SoundBoard.Model
 
         private static IEnumerable<Sample> GetSamples()
         {
-            return MockData.MockData.GetMockData();
+            var samples = MockData.MockData.GetMockData();
+
+            return samples;
         }
     }
 }

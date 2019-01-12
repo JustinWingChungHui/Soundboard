@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:SoundBoard.Model"
+    Loading="Page_Loading"
     mc:Ignorable="d" RequestedTheme="Dark">
 
     <Page.Resources>
@@ -57,7 +58,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="Sound Board" 
                            VerticalAlignment="Center"
-                           Style="{ThemeResource TitleTextBlockStyle}"/>
+                           Style="{ThemeResource HeaderTextBlockStyle}"/>
             <AppBarButton Grid.Column="1" x:Name="AddSampleButton" Label="Add Sample" Icon="Add" Click="AddSampleButton_Click"/>
             <AppBarButton Grid.Column="2" x:Name="RemoveSampleButton" Label="Remove Sample" Icon="Delete" Click="RemoveSampleButton_Click" Visibility="Collapsed"/>
         </Grid>

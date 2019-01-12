@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 
 using Newtonsoft.Json;
+using Windows.Storage;
+using Windows.Media.Core;
 
 namespace SoundBoard.Model
 {
@@ -55,6 +57,7 @@ namespace SoundBoard.Model
         }
 
         private string _groupKey;
+        private MediaSource _mediaSource;
 
         public string GroupKey
         {
@@ -112,11 +115,27 @@ namespace SoundBoard.Model
             }
         }
 
+        [JsonIgnore]
+        public MediaSource MediaSource
+        {
+            get { return _mediaSource; }
+            set
+            {
+                _mediaSource = value;
+                OnPropertyChanged("MediaSource");
+            }
+        }
+
         public override string ToString()
         {
             return this.Title;
         }
 
+        public async Task LoadSample()
+        {
+            var file = await StorageFile.GetFileFromPathAsync(this.AudioPath);
 
+            this.MediaSource = MediaSource.CreateFromStorageFile(file);
+        }
     }
 }

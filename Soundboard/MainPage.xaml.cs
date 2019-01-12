@@ -1,10 +1,10 @@
 ﻿using System;
-using SoundBoard.Model;
-using Windows.Media.Core;
-using Windows.Storage;
-using Windows.Storage.Streams;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using SoundBoard.Model;
 
 namespace SoundBoard
 {
@@ -12,11 +12,20 @@ namespace SoundBoard
     {
         private Guid _currentlyPlaying;
 
+        public ObservableCollection<SampleGroup> Samples { get; set; }
+
         public MainPage()
         {
             this.InitializeComponent();
-            //SamplesCVS.Source = Contact.GetContactsGrouped(250);
-            SamplesCVS.Source = DataSource.GetSamplesGrouped();
+            this.Samples = DataSource.GetSamplesGrouped();
+            SamplesCVS.Source = this.Samples;
+        }
+
+        private async void Page_Loading(FrameworkElement sender, object args)
+        {
+            // Load all samples into memory
+            await Task.WhenAll(this.Samples
+                .SelectMany(g => g.Select(s => s.LoadSample())));  
         }
 
 
@@ -26,7 +35,7 @@ namespace SoundBoard
         /// <param name="sender">The GridView (or ListView when the application is snapped)
         /// displaying the item clicked.</param>
         /// <param name="e">Event data that describes the item clicked.</param>
-        private async void itemGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void itemGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
 
             try
@@ -47,27 +56,18 @@ namespace SoundBoard
                     return;
                 }
 
-                //Play new sample
-                //var folder = Windows.Storage.ApplicationData.Current.LocalFolder;
-                //var file = await folder.GetFileAsync(sampleItem.AudioPath);
-
-                var file = await StorageFile.GetFileFromPathAsync(sampleItem.AudioPath);
-               
-
-                IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read);
-
-                this.AudioPlayer.Source = MediaSource.CreateFromStorageFile(file);
+                this.AudioPlayer.Source = sampleItem.MediaSource;
                 _currentlyPlaying = sampleItem.UniqueID;
                 this.AudioPlayer.MediaPlayer.Play();
-                this.AudioPlayer.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                this.playBackErrorMessage.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                this.AudioPlayer.Visibility = Visibility.Visible;
+                this.playBackErrorMessage.Visibility = Visibility.Collapsed;
             }
             catch (Exception ex)
             {
-                this.AudioPlayer.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                this.AudioPlayer.Visibility = Visibility.Collapsed;
 
                 this.playBackErrorMessage.Text = ex.Message;
-                this.playBackErrorMessage.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                this.playBackErrorMessage.Visibility = Visibility.Visible;
             }
 
         }
@@ -79,12 +79,15 @@ namespace SoundBoard
 
         private void AddSampleButton_Click(object sender, RoutedEventArgs e)
         {
-
+            //Navigate to next screen
+            ((Frame)Window.Current.Content).Navigate(typeof(AddSample));
         }
 
         private void itemGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.RemoveSampleButton.Visibility = e.AddedItems.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
+
+
     }
 }

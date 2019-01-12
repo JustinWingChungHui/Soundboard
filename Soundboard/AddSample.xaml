@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="SoundBoard.AddSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SoundBoard"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    RequestedTheme="Dark"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Back button and page title -->
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="backButton" 
+                    Click="backButton_Click"
+                    Style="{StaticResource NavigationBackButtonNormalStyle}"/>
+            <TextBlock x:Name="pageTitle" Text="Add Sample" 
+                       Style="{StaticResource HeaderTextBlockStyle}" 
+                       IsHitTestVisible="false" TextWrapping="NoWrap"/>
+
+        </StackPanel>
+
+        <StackPanel Margin="20" Grid.Row="1">
+            <TextBlock x:Name="sampleFileName" Text="SampleFileName.wav" Margin="0,0,20,20" Style="{StaticResource SubheaderTextBlockStyle}" Opacity="0.8" />
+
+            <TextBlock  Text="Title:" Style="{StaticResource SubheaderTextBlockStyle}"/>
+            <TextBox x:Name="sampleTitle"  HorizontalAlignment="Left" Width="600" Margin="0,10,0,20" />
+
+            <TextBlock Text="Group:" Style="{StaticResource SubheaderTextBlockStyle}"/>
+            <!--<StackPanel Orientation="Horizontal" >
+                <ComboBox x:Name="sampleGroupCombo"  HorizontalAlignment="Left" Width="600" Margin="0,10,0,20" DataContext="{Binding}">
+                       
+                </ComboBox>
+                <Button x:Name="addGroup"  Margin="20,10,0,20" VerticalAlignment="Stretch" HorizontalAlignment="Left" Tapped="addGroup_Tapped">Add</Button>
+            </StackPanel>-->
+            <TextBox  x:Name="groupName" HorizontalAlignment="Left" Width="600" Margin="0,10,0,20" />
+
+
+            <TextBlock  Text="Picture:" Style="{StaticResource SubheaderTextBlockStyle}"/>
+            <Border  Width="200" Height="200" Margin="0,10,0,10" BorderThickness="1" BorderBrush="Black" Background="Black" CornerRadius="2" HorizontalAlignment="Left" >
+                <StackPanel  Orientation="Vertical">
+                    <Border   Width="200" Height="200" Margin="0,0,0,10" Background="#FFD4D2D2" Tapped="Border_Tapped" >
+                        <Image x:Name="PicturePreview" Margin="0,0,0,0" HorizontalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" Margin="0,40,0,0">
+                <Button Content="Add Sample" Foreground="#FF858585" Height="41"  Width="114" HorizontalAlignment="Left" Tapped="Button_Tapped" />
+                <TextBlock x:Name="ErrorMessages" Margin="20,0,0,0" Foreground="Red" FontSize="14"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Page>
