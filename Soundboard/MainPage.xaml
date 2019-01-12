@@ -6,39 +6,34 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:SoundBoard.Model"
-    mc:Ignorable="d">
+    mc:Ignorable="d" RequestedTheme="Dark">
 
     <Page.Resources>
         <!-- Use a collection view source for content that presents itself as a list of items that can be grouped or sorted.  Otherwise, you can use x:Bind
         directly on the GridView's item source to for further optimization. Please see the AppUIBasics sample for an example of how to do this.  -->
-        <CollectionViewSource x:Name="ContactsCVS"  IsSourceGrouped="True" />
+        <CollectionViewSource x:Name="SamplesCVS"  IsSourceGrouped="True" />
 
         <!--#region DataTemplate-->
         <!-- When using x:Bind, you need to set x:DataType -->
-        <DataTemplate x:Name="ContactGridViewTemplate" x:DataType="data:Contact">
-            <StackPanel Orientation="Vertical">
+        <DataTemplate x:Name="SampleViewTemplate" x:DataType="data:Sample">
+            <StackPanel Orientation="Vertical"
+                        Margin="0 20 30 20">
                 <Ellipse x:Name="Ellipse" 
                              Width ="140"
                              Height="140"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Center"
-                             Fill="LightGray"
-                             Margin="4,4,4,4"/>
-                <!-- Phase 2: TextBlock with contact name-->
+                             Margin="4,4,4,4">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{x:Bind ImagePath}" />
+                    </Ellipse.Fill>
+                </Ellipse>
+                <!-- Phase 2: TextBlock with Title-->
                 <TextBlock x:Name="ContactName" 
                                Margin="4,4,0,4"
-                               Text="{x:Bind Name}" 
+                               Text="{x:Bind Title}" 
                                x:Phase="2" 
                                Style="{ThemeResource BodyTextBlockStyle}" 
-                               HorizontalAlignment="Center"/>
-                <!-- Phase 3: TextBlock with contact job title-->
-                <TextBlock x:Name="Position" 
-                               Text="{x:Bind Position}" 
-                               Margin="4,4,0,4"
-                               x:Phase="3" 
-                               Style="{ThemeResource BodyTextBlockStyle}"
-                               FontSize="12"
-                               Foreground="Gray"
                                HorizontalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
@@ -51,24 +46,61 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Sound Board" 
-                       VerticalAlignment="Center"
-                       Style="{ThemeResource TitleTextBlockStyle}"/>
 
-        <GridView Grid.Row="1" 
-                  ItemsSource="{x:Bind ContactsCVS.View}"
-                  ItemTemplate="{StaticResource ContactGridViewTemplate}">
+        <Grid Grid.Row="0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Sound Board" 
+                           VerticalAlignment="Center"
+                           Style="{ThemeResource TitleTextBlockStyle}"/>
+            <AppBarButton Grid.Column="1" x:Name="AddSampleButton" Label="Add Sample" Icon="Add" Click="AddSampleButton_Click"/>
+            <AppBarButton Grid.Column="2" x:Name="RemoveSampleButton" Label="Remove Sample" Icon="Delete" Click="RemoveSampleButton_Click" Visibility="Collapsed"/>
+        </Grid>
+        <GridView 
+                  x:Name="itemGridView"
+                  Grid.Row="1" 
+                  ItemsSource="{x:Bind SamplesCVS.View}"
+                  ItemTemplate="{StaticResource SampleViewTemplate}"
+                  IsMultiSelectCheckBoxEnabled="False"
+                  SelectionMode="Single"
+                  IsItemClickEnabled="True"
+                  ItemClick="itemGridView_ItemClick"
+                  SelectionChanged="itemGridView_SelectionChanged">
             <GridView.GroupStyle>
                 <GroupStyle >
                     <GroupStyle.HeaderTemplate>
-                        <DataTemplate x:DataType="data:GroupInfoList">
+                        <DataTemplate x:DataType="data:SampleGroup">
                             <TextBlock Text="{x:Bind Key}" 
-                                       Style="{ThemeResource TitleTextBlockStyle}"/>
+                                       Style="{ThemeResource TitleTextBlockStyle}"
+                                       Margin="0 30 0 0"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
             </GridView.GroupStyle>
         </GridView>
+
+
+        <MediaPlayerElement x:Name="AudioPlayer" 
+            Grid.Row="2"                          
+            AreTransportControlsEnabled="True">
+            <MediaPlayerElement.TransportControls>
+                <MediaTransportControls IsFullWindowButtonVisible="False" IsCompact="True" IsZoomButtonVisible="False"/>
+            </MediaPlayerElement.TransportControls>
+            
+        </MediaPlayerElement>
+        <TextBlock x:Name="playBackErrorMessage" Grid.Row="3" Visibility="Collapsed"/>
+
     </Grid>
+
+    <!--<Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Name="AddSampleButton" Label="Add Sample" Icon="Add" Click="AddSampleButton_Click"/>
+            <AppBarButton x:Name="RemoveSampleButton" Label="Remove Sample" Icon="Delete" Click="RemoveSampleButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>-->
 </Page>
