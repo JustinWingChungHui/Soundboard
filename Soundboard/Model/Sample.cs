@@ -103,18 +103,6 @@ namespace SoundBoard.Model
         }
 
 
-
-        [JsonIgnore]
-        public BitmapImage Image
-        {
-            get { return _image; }
-            set
-            {
-                _image = value;
-                OnPropertyChanged("Image");
-            }
-        }
-
         [JsonIgnore]
         public MediaSource MediaSource
         {

@@ -7,7 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:SoundBoard.Model"
     Loading="Page_Loading"
-    mc:Ignorable="d" RequestedTheme="Dark">
+    
+    mc:Ignorable="d" 
+    RequestedTheme="Dark">
 
     <Page.Resources>
         <!-- Use a collection view source for content that presents itself as a list of items that can be grouped or sorted.  Otherwise, you can use x:Bind
@@ -26,7 +28,7 @@
                              HorizontalAlignment="Center"
                              Margin="4,4,4,4">
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="{x:Bind ImagePath}" />
+                        <ImageBrush ImageSource="{x:Bind ImagePath}"  Stretch="UniformToFill"/>
                     </Ellipse.Fill>
                 </Ellipse>
                 <!-- Phase 2: TextBlock with Title-->
@@ -62,6 +64,9 @@
             <AppBarButton Grid.Column="1" x:Name="AddSampleButton" Label="Add Sample" Icon="Add" Click="AddSampleButton_Click"/>
             <AppBarButton Grid.Column="2" x:Name="RemoveSampleButton" Label="Remove Sample" Icon="Delete" Click="RemoveSampleButton_Click" Visibility="Collapsed"/>
         </Grid>
+
+        <ProgressRing x:Name="progressRing" Grid.Row="1"/>
+
         <GridView 
                   x:Name="itemGridView"
                   Grid.Row="1" 
@@ -71,7 +76,8 @@
                   SelectionMode="Single"
                   IsItemClickEnabled="True"
                   ItemClick="itemGridView_ItemClick"
-                  SelectionChanged="itemGridView_SelectionChanged">
+                  SelectionChanged="itemGridView_SelectionChanged"
+                  Visibility="Collapsed">
             <GridView.GroupStyle>
                 <GroupStyle >
                     <GroupStyle.HeaderTemplate>

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SoundBoard.Model;
+using Windows.UI.Xaml.Navigation;
 
 namespace SoundBoard
 {
@@ -17,15 +18,27 @@ namespace SoundBoard
         public MainPage()
         {
             this.InitializeComponent();
-            this.Samples = DataSource.GetSamplesGrouped();
-            SamplesCVS.Source = this.Samples;
+
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            await LoadData();
         }
 
         private async void Page_Loading(FrameworkElement sender, object args)
         {
-            // Load all samples into memory
-            await Task.WhenAll(this.Samples
-                .SelectMany(g => g.Select(s => s.LoadSample())));  
+            await LoadData();
+        }
+
+        private async Task LoadData()
+        {
+            this.Samples = await DataSource.GetSamplesGrouped();
+            SamplesCVS.Source = this.Samples;
+
+            this.progressRing.Visibility = Visibility.Collapsed;
+            this.itemGridView.Visibility = Visibility.Visible;
         }
 
 

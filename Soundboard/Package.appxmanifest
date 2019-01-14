@@ -25,4 +25,10 @@
       </uap:VisualElements>
     </Application>
   </Applications>
+  <Capabilities>
+    <uap:Capability Name="musicLibrary" />
+    <uap:Capability Name="picturesLibrary" />
+    <uap:Capability Name="removableStorage" />
+    <uap:Capability Name="videosLibrary" />
+  </Capabilities>
 </Package>
