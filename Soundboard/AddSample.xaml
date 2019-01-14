@@ -32,26 +32,21 @@
             <TextBox x:Name="sampleTitle"  HorizontalAlignment="Left" Width="600" Margin="0,10,0,20" />
 
             <TextBlock Text="Group:" Style="{StaticResource SubheaderTextBlockStyle}"/>
-            <!--<StackPanel Orientation="Horizontal" >
-                <ComboBox x:Name="sampleGroupCombo"  HorizontalAlignment="Left" Width="600" Margin="0,10,0,20" DataContext="{Binding}">
-                       
-                </ComboBox>
-                <Button x:Name="addGroup"  Margin="20,10,0,20" VerticalAlignment="Stretch" HorizontalAlignment="Left" Tapped="addGroup_Tapped">Add</Button>
-            </StackPanel>-->
             <TextBox  x:Name="groupName" HorizontalAlignment="Left" Width="600" Margin="0,10,0,20" />
 
 
             <TextBlock  Text="Picture:" Style="{StaticResource SubheaderTextBlockStyle}"/>
-            <Border  Width="200" Height="200" Margin="0,10,0,10" BorderThickness="1" BorderBrush="Black" Background="Black" CornerRadius="2" HorizontalAlignment="Left" >
-                <StackPanel  Orientation="Vertical">
-                    <Border   Width="200" Height="200" Margin="0,0,0,10" Background="#FFD4D2D2" Tapped="Border_Tapped" >
-                        <Image x:Name="PicturePreview" Margin="0,0,0,0" HorizontalAlignment="Center"/>
-                    </Border>
-                </StackPanel>
-            </Border>
+            <Grid Width="600" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="pictureFilename"  HorizontalAlignment="Stretch"/>
+                <Button x:Name="buttonBrowse" Grid.Column="1" Content="Browse" Click="buttonBrowse_Click" HorizontalAlignment="Right"/>
+            </Grid>
 
             <StackPanel Orientation="Horizontal" Margin="0,40,0,0">
-                <Button Content="Add Sample" Foreground="#FF858585" Height="41"  Width="114" HorizontalAlignment="Left" Tapped="Button_Tapped" />
+                <Button x:Name="buttonAddSample" Content="Add Sample" HorizontalAlignment="Left" Click="buttonAddSample_Click"/>
                 <TextBlock x:Name="ErrorMessages" Margin="20,0,0,0" Foreground="Red" FontSize="14"/>
             </StackPanel>
 

@@ -31,5 +31,15 @@ namespace SoundBoard
         {
             ((Frame)Window.Current.Content).Navigate(typeof(MainPage));
         }
+
+        private void buttonBrowse_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonAddSample_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
