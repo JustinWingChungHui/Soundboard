@@ -43,6 +43,50 @@ namespace SoundBoard.Model
             return result;
         }
 
+
+        public static async Task AddSample(string title, string group, StorageFile pictureFile, StorageFile audioFile)
+        {
+            var samples = await GetSamples();
+
+            // Copy files to applicationdata folder
+            var folder = ApplicationData.Current.LocalFolder;
+
+            // Picture
+            var buffer = await FileIO.ReadBufferAsync(pictureFile);
+            var newPictureFile = await folder.CreateFileAsync($"{Guid.NewGuid()}.{pictureFile.FileType}");
+            await FileIO.WriteBytesAsync(newPictureFile, buffer.ToArray());
+
+            // audio
+            buffer = await FileIO.ReadBufferAsync(audioFile);
+            var newAudioFile = await folder.CreateFileAsync($"{Guid.NewGuid()}.{audioFile.FileType}");
+            await FileIO.WriteBytesAsync(newAudioFile, buffer.ToArray());
+
+            var formattedGroup = samples.FirstOrDefault(s => s.GroupKey.Equals(group, StringComparison.InvariantCultureIgnoreCase))?
+                .GroupKey ?? group;
+
+            samples.Add(new Sample
+            {
+                UniqueID = Guid.NewGuid(),
+                Title = title,
+                AudioPath = newAudioFile.Path,
+                GroupKey = formattedGroup,
+                ImagePath = newPictureFile.Path,
+            });
+
+            await SaveSamples(samples);
+
+            // Load all samples into memory
+            await Task.WhenAll(samples.Select(s => s.LoadSample()));
+        }
+
+        public static async Task RemoveSample(Guid uniqueID)
+        {
+            var samples = await GetSamples();
+            samples.RemoveAll(s => s.UniqueID == uniqueID);
+
+            await SaveSamples(samples);
+        }
+
         private static async Task<List<Sample>> GetSamples()
         {
             List<Sample> samples = new List<Sample>();
@@ -82,44 +126,7 @@ namespace SoundBoard.Model
             {
                 return string.Empty;
             }
-
         }
-
-        public static async Task AddSample(string title, string group, StorageFile pictureFile, StorageFile audioFile)
-        {
-            var samples = await GetSamples();
-
-            // Copy files to applicationdata folder
-            var folder = ApplicationData.Current.LocalFolder;
-
-            // Picture
-            var buffer = await FileIO.ReadBufferAsync(pictureFile);
-            var newPictureFile = await folder.CreateFileAsync($"{Guid.NewGuid()}.{pictureFile.FileType}");
-            await FileIO.WriteBytesAsync(newPictureFile, buffer.ToArray());
-
-            // audio
-            buffer = await FileIO.ReadBufferAsync(audioFile);
-            var newAudioFile = await folder.CreateFileAsync($"{Guid.NewGuid()}.{audioFile.FileType}");
-            await FileIO.WriteBytesAsync(newAudioFile, buffer.ToArray());
-
-            var formattedGroup = samples.FirstOrDefault(s => s.GroupKey.Equals(group, StringComparison.InvariantCultureIgnoreCase))?
-                .GroupKey ?? group;
-
-            samples.Add(new Sample
-            {
-                UniqueID = Guid.NewGuid(),
-                Title = title,
-                AudioPath = newAudioFile.Path,
-                GroupKey = formattedGroup,
-                ImagePath = newPictureFile.Path,
-            });
-
-            await SaveSamples(samples);
-
-            // Load all samples into memory
-            await Task.WhenAll(samples.Select(s => s.LoadSample()));
-        }
-
 
         private static async Task SaveSamples(List<Sample> samples)
         {

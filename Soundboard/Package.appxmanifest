@@ -15,11 +15,9 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SoundBoard">
-      <uap:VisualElements DisplayName="SoundBoard" Square150x150Logo="Assets\squaretile-sdk.png" Square44x44Logo="Assets\SmallTile-sdk.png" Description="Customisable SoundBoard" BackgroundColor="#00b2f0">
-        <uap:DefaultTile>
-          <uap:ShowNameOnTiles>
-            <uap:ShowOn Tile="square150x150Logo" />
-          </uap:ShowNameOnTiles>
+      <uap:VisualElements DisplayName="My Soundboard" Square150x150Logo="Assets\squaretile-sdk.png" Square44x44Logo="Assets\SmallTile-sdk.png" Description="Customizable SoundBoard" BackgroundColor="#000000">
+        <uap:LockScreen Notification="" BadgeLogo="Assets\BadgeLogo.png" />
+        <uap:DefaultTile Square71x71Logo="Assets\SmallTile.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\splash-sdk.png" />
       </uap:VisualElements>

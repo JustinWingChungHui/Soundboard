@@ -34,6 +34,28 @@ namespace SoundBoard
         public StorageFile PictureFile { get; private set; }
         public StorageFile AudioFile { get; private set; }
 
+        public bool SaveEnabled
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(this.sampleTitle.Text)
+                    && !string.IsNullOrEmpty(this.groupName.Text)
+                    && !string.IsNullOrEmpty(this.sampleFilename.Text)
+                    && !string.IsNullOrEmpty(this.pictureFilename.Text);
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            this.PictureFile = null;
+            this.AudioFile = null;
+            this.sampleTitle.Text = string.Empty;
+            this.groupName.Text = string.Empty;
+            this.sampleFilename.Text = string.Empty;
+            this.pictureFilename.Text = string.Empty;
+        }
+
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
             ((Frame)Window.Current.Content).Navigate(typeof(MainPage));
@@ -84,6 +106,11 @@ namespace SoundBoard
 
             try
             {
+                if (!this.SaveEnabled)
+                {
+                    throw new ArgumentException("Missing fields");
+                }
+
                 await DataSource.AddSample(
                     this.sampleTitle.Text.Trim()
                     ,this.groupName.Text.Trim()

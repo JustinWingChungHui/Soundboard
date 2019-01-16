@@ -9,6 +9,9 @@ namespace SoundBoard
 {
     sealed partial class App : Application
     {
+
+        private Windows.System.Display.DisplayRequest _displayRequest;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -19,7 +22,26 @@ namespace SoundBoard
             this.Suspending += OnSuspending;
         }
 
-        
+        public void ActivateDisplay()
+        {
+            //create the request instance if needed
+            if (_displayRequest == null)
+                _displayRequest = new Windows.System.Display.DisplayRequest();
+
+            //make request to put in active state
+            _displayRequest.RequestActive();
+        }
+
+        public void ReleaseDisplay()
+        {
+            //must be same instance, so quit if it doesn't exist
+            if (_displayRequest == null)
+                return;
+
+            //undo the request
+            _displayRequest.RequestRelease();
+        }
+
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -65,6 +87,9 @@ namespace SoundBoard
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            // Ensure screen saver does not come on
+            ActivateDisplay();
         }
 
         /// <summary>
@@ -87,7 +112,10 @@ namespace SoundBoard
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+
+            //Stop any background activity
+            ReleaseDisplay();
+
             deferral.Complete();
         }
     }

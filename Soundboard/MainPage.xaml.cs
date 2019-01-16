@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SoundBoard.Model;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Popups;
 
 namespace SoundBoard
 {
@@ -34,9 +35,12 @@ namespace SoundBoard
 
         private async Task LoadData()
         {
+            this.progressRing.Visibility = Visibility.Visible;
+            this.itemGridView.Visibility = Visibility.Collapsed;
+
             this.Samples = await DataSource.GetSamplesGrouped();
             SamplesCVS.Source = this.Samples;
-
+            
             this.progressRing.Visibility = Visibility.Collapsed;
             this.itemGridView.Visibility = Visibility.Visible;
         }
@@ -85,9 +89,37 @@ namespace SoundBoard
 
         }
 
-        private void RemoveSampleButton_Click(object sender, RoutedEventArgs e)
+        private async void RemoveSampleButton_Click(object sender, RoutedEventArgs e)
         {
+            var selectedSample = (Sample)this.itemGridView.SelectedItem;
 
+            // Create the message dialog and set its content
+            var messageDialog = new MessageDialog($"Are you sure you want to delete {selectedSample.Title}?");
+
+            // Add commands and set their callbacks; both buttons use the same callback function instead of inline event handlers
+            messageDialog.Commands.Add(new UICommand(
+                "Yes",
+                new UICommandInvokedHandler(this.CommandInvokeDelete)));
+            messageDialog.Commands.Add(new UICommand("Cancel"));
+
+            // Set the command that will be invoked by default
+            messageDialog.DefaultCommandIndex = 0;
+
+            // Set the command to be invoked when escape is pressed
+            messageDialog.CancelCommandIndex = 1;
+
+            // Show the message dialog
+            await messageDialog.ShowAsync();
+        }
+
+        private async void CommandInvokeDelete(IUICommand command)
+        {
+            this.progressRing.Visibility = Visibility.Visible;
+            this.itemGridView.Visibility = Visibility.Collapsed;
+            var selectedSample = (Sample)this.itemGridView.SelectedItem;
+
+            await DataSource.RemoveSample(selectedSample.UniqueID);
+            await this.LoadData();
         }
 
         private void AddSampleButton_Click(object sender, RoutedEventArgs e)
