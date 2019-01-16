@@ -40,8 +40,7 @@ namespace SoundBoard
             {
                 return !string.IsNullOrEmpty(this.sampleTitle.Text)
                     && !string.IsNullOrEmpty(this.groupName.Text)
-                    && !string.IsNullOrEmpty(this.sampleFilename.Text)
-                    && !string.IsNullOrEmpty(this.pictureFilename.Text);
+                    && !string.IsNullOrEmpty(this.sampleFilename.Text);
             }
         }
 

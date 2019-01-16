@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="SoundBoard.CS" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1.0.0.0" />
+  <Identity Name="MySoundBoard.CS" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="059bc473-6a0d-42e8-9414-2ffe3f831fdd" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>SoundBoard</DisplayName>
+    <DisplayName>My Sound Board</DisplayName>
     <PublisherDisplayName>Tech Luminaire Ltd</PublisherDisplayName>
     <Logo>Assets\StoreLogo-sdk.png</Logo>
   </Properties>
@@ -15,9 +15,9 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SoundBoard">
-      <uap:VisualElements DisplayName="My Soundboard" Square150x150Logo="Assets\squaretile-sdk.png" Square44x44Logo="Assets\SmallTile-sdk.png" Description="Customizable SoundBoard" BackgroundColor="#000000">
-        <uap:LockScreen Notification="" BadgeLogo="Assets\BadgeLogo.png" />
-        <uap:DefaultTile Square71x71Logo="Assets\SmallTile.png">
+      <uap:VisualElements DisplayName="My Soundboard" Square150x150Logo="Assets\squaretile-sdk.png" Square44x44Logo="Assets\SmallTile-sdk.png" Description="Customizable Soundboard.  Add your ownsamples and effects" BackgroundColor="#110022">
+        <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\BadgeLogo.png" />
+        <uap:DefaultTile Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" Wide310x150Logo="Assets\WideTile.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\splash-sdk.png" />
       </uap:VisualElements>

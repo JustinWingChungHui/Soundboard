@@ -52,14 +52,19 @@ namespace SoundBoard.Model
             var folder = ApplicationData.Current.LocalFolder;
 
             // Picture
-            var buffer = await FileIO.ReadBufferAsync(pictureFile);
-            var newPictureFile = await folder.CreateFileAsync($"{Guid.NewGuid()}.{pictureFile.FileType}");
-            await FileIO.WriteBytesAsync(newPictureFile, buffer.ToArray());
+            string newPicturePath = null;
+            if (pictureFile != null)
+            {
+                var picBuffer = await FileIO.ReadBufferAsync(pictureFile);
+                var newPictureFile = await folder.CreateFileAsync($"{Guid.NewGuid()}.{pictureFile.FileType}");
+                await FileIO.WriteBytesAsync(newPictureFile, picBuffer.ToArray());
+                newPicturePath = newPictureFile.Path;
+            }
 
             // audio
-            buffer = await FileIO.ReadBufferAsync(audioFile);
+            var audioBuffer = await FileIO.ReadBufferAsync(audioFile);
             var newAudioFile = await folder.CreateFileAsync($"{Guid.NewGuid()}.{audioFile.FileType}");
-            await FileIO.WriteBytesAsync(newAudioFile, buffer.ToArray());
+            await FileIO.WriteBytesAsync(newAudioFile, audioBuffer.ToArray());
 
             var formattedGroup = samples.FirstOrDefault(s => s.GroupKey.Equals(group, StringComparison.InvariantCultureIgnoreCase))?
                 .GroupKey ?? group;
@@ -70,7 +75,7 @@ namespace SoundBoard.Model
                 Title = title,
                 AudioPath = newAudioFile.Path,
                 GroupKey = formattedGroup,
-                ImagePath = newPictureFile.Path,
+                ImagePath = newPicturePath
             });
 
             await SaveSamples(samples);

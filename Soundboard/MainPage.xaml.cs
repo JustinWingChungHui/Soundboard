@@ -28,11 +28,6 @@ namespace SoundBoard
             await LoadData();
         }
 
-        private async void Page_Loading(FrameworkElement sender, object args)
-        {
-            await LoadData();
-        }
-
         private async Task LoadData()
         {
             this.progressRing.Visibility = Visibility.Visible;

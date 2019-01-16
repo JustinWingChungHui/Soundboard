@@ -124,6 +124,15 @@ namespace SoundBoard.Model
             var file = await StorageFile.GetFileFromPathAsync(this.AudioPath);
 
             this.MediaSource = MediaSource.CreateFromStorageFile(file);
+
+            // Use default image if no image set
+            if (this.ImagePath == null)
+            {
+                StorageFolder appInstalledFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+                StorageFolder assets = await appInstalledFolder.GetFolderAsync("Assets");
+
+                ImagePath = $"{assets.Path}\\soundboard.png";
+            }
         }
     }
 }
