@@ -20,7 +20,6 @@ namespace SoundBoard.Model
         private string _title;
         private string _audioPath;
         private string _imagePath;
-        private BitmapImage _image;
 
         /// <summary>
         /// Creates a new instance of a sample

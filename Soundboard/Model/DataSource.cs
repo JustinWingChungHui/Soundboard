@@ -110,7 +110,6 @@ namespace SoundBoard.Model
                 samples = new List<Sample>();
             }
 
-
             return samples;
         }
 

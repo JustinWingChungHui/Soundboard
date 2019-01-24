@@ -18,46 +18,62 @@
         <StackPanel Orientation="Horizontal">
             <Button x:Name="backButton" 
                     Click="backButton_Click"
-                    Style="{StaticResource NavigationBackButtonNormalStyle}"/>
+                    Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Center"/>
             <TextBlock x:Name="pageTitle" Text="Add Sample" 
-                       Style="{StaticResource HeaderTextBlockStyle}" 
-                       IsHitTestVisible="false" TextWrapping="NoWrap"/>
+                       Style="{StaticResource SubheaderTextBlockStyle}" 
+                       IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center"/>
 
         </StackPanel>
-
-        <StackPanel Margin="20" Grid.Row="1">
-            <TextBlock  Text="Title:" Style="{StaticResource SubheaderTextBlockStyle}"/>
-            <TextBox x:Name="sampleTitle"  HorizontalAlignment="Left" Width="600" Margin="0,10,0,20" />
-
-            <TextBlock Text="Group:" Style="{StaticResource SubheaderTextBlockStyle}"/>
-            <TextBox  x:Name="groupName" HorizontalAlignment="Left" Width="600" Margin="0,10,0,20" />
-
-
-            <TextBlock  Text="Picture:" Style="{StaticResource SubheaderTextBlockStyle}"/>
-            <Grid Width="600" HorizontalAlignment="Left"  Margin="0,10,0,20">
+        <ScrollViewer Grid.Row="1" Margin="20 20 0 0">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition MaxWidth="600" Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="pictureFilename" IsReadOnly="True"/>
-                <Button x:Name="buttonBrowsePicture" Grid.Column="1" Content="Browse" Click="buttonBrowsePicture_Click"/>
-            </Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock Text="Sample:" Style="{StaticResource SubheaderTextBlockStyle}"/>
-            <Grid Width="600" HorizontalAlignment="Left">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBox x:Name="sampleFilename"  IsReadOnly="True"/>
-                <Button x:Name="buttonBrowseSample" Grid.Column="1" Content="Browse" Click="buttonBrowseSample_Click"/>
-            </Grid>
+                <TextBlock Grid.Row="0" Text="Title:" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                <TextBox Grid.Row="1" x:Name="sampleTitle"  HorizontalAlignment="Stretch" Margin="0,10,20,20" />
 
-            <StackPanel Orientation="Horizontal" Margin="0,40,0,0">
-                <Button x:Name="buttonSave" Content="Save" HorizontalAlignment="Left" Click="buttonSave_Click"/>
-                <TextBlock x:Name="ErrorMessages" Margin="20,0,0,0" Foreground="Red" FontSize="14"/>
-            </StackPanel>
-            
-        </StackPanel>
+                <TextBlock Grid.Row="2" Text="Group:" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                <TextBox Grid.Row="3" x:Name="groupName" HorizontalAlignment="Stretch" Margin="0,10,20,20" />
+
+                <TextBlock Grid.Row="4" Text="Picture:" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                <Grid Grid.Row="5" HorizontalAlignment="Stretch" Margin="0,10,20,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="pictureFilename" IsReadOnly="True"/>
+                    <Button x:Name="buttonBrowsePicture" Grid.Column="1" Content="Browse" Click="buttonBrowsePicture_Click"/>
+                </Grid>
+
+                <TextBlock Grid.Row="6" Text="Sample:" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                <Grid Grid.Row="7" HorizontalAlignment="Stretch" Margin="0,10,20,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="sampleFilename"  IsReadOnly="True"/>
+                    <Button x:Name="buttonBrowseSample" Grid.Column="1" Content="Browse" Click="buttonBrowseSample_Click"/>
+                </Grid>
+
+                <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="0,20,0,0">
+                    <Button x:Name="buttonSave" Content="Save" HorizontalAlignment="Left" Click="buttonSave_Click"/>
+                    <TextBlock x:Name="ErrorMessages" Margin="20,0,0,0" Foreground="Red" FontSize="14"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

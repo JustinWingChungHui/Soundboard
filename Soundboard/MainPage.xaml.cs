@@ -31,12 +31,14 @@ namespace SoundBoard
         private async Task LoadData()
         {
             this.progressRing.Visibility = Visibility.Visible;
+            this.progressRing.IsActive = true;
             this.itemGridView.Visibility = Visibility.Collapsed;
 
             this.Samples = await DataSource.GetSamplesGrouped();
             SamplesCVS.Source = this.Samples;
             
             this.progressRing.Visibility = Visibility.Collapsed;
+            this.progressRing.IsActive = false;
             this.itemGridView.Visibility = Visibility.Visible;
         }
 
@@ -57,20 +59,20 @@ namespace SoundBoard
                 //Resume/pause existing sample
                 if (_currentlyPlaying == sampleItem.UniqueID)
                 {
-                    if (this.AudioPlayer.MediaPlayer.PlaybackSession.PlaybackState == Windows.Media.Playback.MediaPlaybackState.Playing)
+                    if (this.AudioPlayer.MediaPlayer?.PlaybackSession?.PlaybackState == Windows.Media.Playback.MediaPlaybackState.Playing)
                     {
-                        this.AudioPlayer.MediaPlayer.Pause();
+                        this.AudioPlayer.MediaPlayer?.Pause();
                     }
                     else
                     {
-                        this.AudioPlayer.MediaPlayer.Play();
+                        this.AudioPlayer.MediaPlayer?.Play();
                     }
                     return;
                 }
 
                 this.AudioPlayer.Source = sampleItem.MediaSource;
                 _currentlyPlaying = sampleItem.UniqueID;
-                this.AudioPlayer.MediaPlayer.Play();
+                this.AudioPlayer.MediaPlayer?.Play();
                 this.AudioPlayer.Visibility = Visibility.Visible;
                 this.playBackErrorMessage.Visibility = Visibility.Collapsed;
             }
@@ -119,6 +121,11 @@ namespace SoundBoard
 
         private void AddSampleButton_Click(object sender, RoutedEventArgs e)
         {
+            // Stop any play back
+            this.AudioPlayer.MediaPlayer?.Pause();
+            this.AudioPlayer.Source = null;
+            _currentlyPlaying = Guid.Empty;
+
             //Navigate to next screen
             ((Frame)Window.Current.Content).Navigate(typeof(AddSample));
         }

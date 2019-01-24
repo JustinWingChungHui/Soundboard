@@ -172,7 +172,12 @@
     <Content Include="Assets\WideTile.scale-150.png" />
     <Content Include="Assets\WideTile.scale-200.png" />
     <Content Include="Assets\WideTile.scale-400.png" />
-    <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Store logos\1440x2160.png" />
+    <Content Include="Store logos\2160x2160.png" />
+    <Content Include="Store logos\300x300.png" />
+    <None Include="Package.StoreAssociation.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SoundBoard_StoreKey.pfx" />
   </ItemGroup>
   <ItemGroup>
