@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="14617JustinWingChungHui.MySoundBoard" Publisher="CN=9CCEA63D-B4C1-40DD-A8C6-0DD53907963C" Version="1.1.4.0" />
+  <Identity Name="14617JustinWingChungHui.MySoundBoard" Publisher="CN=9CCEA63D-B4C1-40DD-A8C6-0DD53907963C" Version="1.1.6.0" />
   <mp:PhoneIdentity PhoneProductId="546fd988-6b02-449b-98e7-19797e593ded" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>My Sound Board</DisplayName>
