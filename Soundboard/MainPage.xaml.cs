@@ -115,16 +115,15 @@ namespace SoundBoard
             this.itemGridView.Visibility = Visibility.Collapsed;
             var selectedSample = (Sample)this.itemGridView.SelectedItem;
 
+            StopPlaybackAndClear();
+
             await DataSource.RemoveSample(selectedSample.UniqueID);
             await this.LoadData();
         }
 
         private void AddSampleButton_Click(object sender, RoutedEventArgs e)
         {
-            // Stop any play back
-            this.AudioPlayer.MediaPlayer?.Pause();
-            this.AudioPlayer.Source = null;
-            _currentlyPlaying = Guid.Empty;
+            StopPlaybackAndClear();
 
             //Navigate to next screen
             ((Frame)Window.Current.Content).Navigate(typeof(AddSample));
@@ -133,6 +132,14 @@ namespace SoundBoard
         private void itemGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.RemoveSampleButton.Visibility = e.AddedItems.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void StopPlaybackAndClear()
+        {
+            // Stop any play back
+            this.AudioPlayer.MediaPlayer?.Pause();
+            this.AudioPlayer.Source = null;
+            _currentlyPlaying = Guid.Empty;
         }
 
 

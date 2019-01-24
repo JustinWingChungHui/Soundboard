@@ -87,9 +87,17 @@ namespace SoundBoard.Model
         public static async Task RemoveSample(Guid uniqueID)
         {
             var samples = await GetSamples();
-            samples.RemoveAll(s => s.UniqueID == uniqueID);
+            var sample = samples.FirstOrDefault(s => s.UniqueID == uniqueID);
 
-            await SaveSamples(samples);
+            if (sample != null)
+            {
+                File.Delete(sample.ImagePath);
+                File.Delete(sample.AudioPath);
+
+                samples.RemoveAll(s => s.UniqueID == uniqueID);
+
+                await SaveSamples(samples);
+            }
         }
 
         private static async Task<List<Sample>> GetSamples()
