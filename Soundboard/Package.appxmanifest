@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="14617JustinWingChungHui.MySoundBoard" Publisher="CN=9CCEA63D-B4C1-40DD-A8C6-0DD53907963C" Version="1.1.7.0" />
+  <Identity Name="14617JustinWingChungHui.MySoundBoard" Publisher="CN=9CCEA63D-B4C1-40DD-A8C6-0DD53907963C" Version="1.1.11.0" />
   <mp:PhoneIdentity PhoneProductId="546fd988-6b02-449b-98e7-19797e593ded" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>My Sound Board</DisplayName>
@@ -17,7 +17,12 @@
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SoundBoard">
       <uap:VisualElements DisplayName="My Soundboard" Square150x150Logo="Assets\squaretile-sdk.png" Square44x44Logo="Assets\SmallTile-sdk.png" Description="Customizable Soundboard.  Add your ownsamples and effects" BackgroundColor="#110022">
         <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\BadgeLogo.png" />
-        <uap:DefaultTile Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" Wide310x150Logo="Assets\WideTile.png">
+        <uap:DefaultTile Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" Wide310x150Logo="Assets\WideTile.png" ShortName="My Soundboard">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
+          </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\splash-sdk.png" />
       </uap:VisualElements>
